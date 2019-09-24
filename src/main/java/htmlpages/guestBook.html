@@ -1,13 +1,44 @@
 <html>
 <head>
     <title>Guest-Book</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+  $(function(){
+      $("#my-form").submit(function(e) {
+          let name = $("#name").val();
+          let comments = $("#comments").val();
+          let data = {"name": name,
+            }
+
+          $('#user').text(name);
+          $('#comment').text(comments);
+          $('#date').text(new Date());
+          e.preventDefault();
+      });
+  });
+    </script>
 </head>
 <body>
 <center><a href="./index.html"><h1>Guest-Book</h1></a></center>
 <h1>Comments</h1>
-Name : <input type="text" name="name"> <br>
+<form id="my-form">
+    Name : <input type="text" id="name"> <br>
 
-Comment : <textarea type="text" rows="4" cols="50"></textarea><br>
-<button type="submit" value="Submit">Submit</button>
+    Comment : <textarea id="comments" type="text" rows="4" cols="50"></textarea><br>
+    <input type="submit" id="submit" value="submit"/>
+
+</form>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Comments</td>
+        <td>Date</td>
+    </tr>
+    <tr>
+        <td id="user"></td>
+        <td id="comment"></td>
+        <td id="date"></td>
+    </tr>
+</table>
 </body>
 </html>
