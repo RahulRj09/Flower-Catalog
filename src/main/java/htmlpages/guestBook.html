@@ -20,11 +20,11 @@
 <body>
 <center><a href="./index.html"><h1>Guest-Book</h1></a></center>
 <h1>Comments</h1>
-<form name="commentsBox">
+<form action="/guestBook" name="commentsBox" method="POST">
     Name: <input type="text" name="name"/><br>
     comment: <textarea type="text" name="comment" cols="50" rows="10"></textarea>
+    <input type="button" id="button" value="submit">
 </form>
-<input type="button" id="button" value="submit">
 <br/>
 <table cellpadding="10"></table>
 </body>
