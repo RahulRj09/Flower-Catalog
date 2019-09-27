@@ -2,28 +2,14 @@
 <head>
     <title>Guest-Book</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-  $(document).ready(
-    function(){
-        $('#button').click(
-            function(){
-                let name = $('input[name=name]').val();
-                let comment = $('textarea[name=comment]').val();
-                $('table').append('<tr>'+'<td> '+ name +' </td>'+'<td>' + comment +'</td>'+'<td>' +new Date()+'</td>'+'</tr>');
-            });
-    $('table');
-    }
-);
-
-    </script>
 </head>
 <body>
 <center><a href="./index.html"><h1>Guest-Book</h1></a></center>
 <h1>Comments</h1>
-<form action="/guestBook" name="commentsBox" method="POST">
+<form action="/comments" name="commentsBox" method="POST">
     Name: <input type="text" name="name"/><br>
     comment: <textarea type="text" name="comment" cols="50" rows="10"></textarea>
-    <input type="button" id="button" value="submit">
+    <input type="submit" value="submit">
 </form>
 <br/>
 <table cellpadding="10"></table>
