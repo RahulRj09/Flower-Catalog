@@ -10,6 +10,9 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
     public static void main(String[] args) throws Exception {
@@ -37,6 +40,8 @@ public class Server {
     }
 
     private static class PostHandler implements HttpHandler {
+        List<Comment> comments = new ArrayList<>();
+
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             InputStreamReader streamReader = new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8);
@@ -45,8 +50,11 @@ public class Server {
             int indexOfAnd = query.indexOf("&");
             StringBuffer name = getName(query, indexOfAnd);
             StringBuffer comment = getComment(query, indexOfAnd + 9);
-            System.out.println(name);
-            System.out.println(comment);
+            Comment commentA = new Comment(name, comment, LocalDate.now());
+            comments.add(commentA);
+            for (Comment comment1 : comments) {
+                System.out.println(comment1);
+            }
             File root = FileSystemView.getFileSystemView().getHomeDirectory();
             String path = root + "/Flower-Catalog/src/main/java/htmlpages/guestBook.html";
             File file = new File(path);

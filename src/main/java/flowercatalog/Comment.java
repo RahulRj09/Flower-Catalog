@@ -1,15 +1,24 @@
 package flowercatalog;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Comment {
     String name;
     String comment;
-    Date date;
+    LocalDate date;
 
-    public Comment(String name, String comment, Date date) {
-        this.name = name;
-        this.comment = comment;
+    public Comment(StringBuffer name, StringBuffer comment, LocalDate date) {
+        this.name = name.toString();
+        this.comment = comment.toString();
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "name='" + name + '\'' +
+                ", comment='" + comment + '\'' +
+                ", date=" + date +
+                '}';
     }
 }
