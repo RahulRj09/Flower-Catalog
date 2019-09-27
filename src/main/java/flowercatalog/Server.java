@@ -44,7 +44,9 @@ public class Server {
             String query = bufferedReader.readLine();
             int indexOfAnd = query.indexOf("&");
             StringBuffer name = getName(query, indexOfAnd);
+            StringBuffer comment = getComment(query, indexOfAnd+9);
             System.out.println(name);
+            System.out.println(comment);
             File root = FileSystemView.getFileSystemView().getHomeDirectory();
             String path = root + "/Flower-Catalog/src/main/java/htmlpages/guestBook.html";
             File file = new File(path);
@@ -66,6 +68,18 @@ public class Server {
                 }
             }
             return name;
+        }
+
+        private StringBuffer getComment(String query, int indexOfAnd) {
+            StringBuffer comment = new StringBuffer();
+            for (int i = indexOfAnd; i < query.length(); i++) {
+                if (query.charAt(i) == '+') {
+                    comment.append(" ");
+                } else {
+                    comment.append(query.charAt(i));
+                }
+            }
+            return comment;
         }
     }
 }
