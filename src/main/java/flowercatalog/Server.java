@@ -44,7 +44,7 @@ public class Server {
             String query = bufferedReader.readLine();
             int indexOfAnd = query.indexOf("&");
             StringBuffer name = getName(query, indexOfAnd);
-            StringBuffer comment = getComment(query, indexOfAnd+9);
+            StringBuffer comment = getComment(query, indexOfAnd + 9);
             System.out.println(name);
             System.out.println(comment);
             File root = FileSystemView.getFileSystemView().getHomeDirectory();
