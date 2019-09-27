@@ -1,6 +1,5 @@
 package flowercatalog;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -16,7 +15,7 @@ public class Server {
     public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/", new MyHandler());
-        server.createContext("/comments",new PostHandler());
+        server.createContext("/comments", new PostHandler());
         server.setExecutor(null);
         server.start();
     }
@@ -43,9 +42,11 @@ public class Server {
             InputStreamReader streamReader = new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8);
             BufferedReader bufferedReader = new BufferedReader(streamReader);
             String query = bufferedReader.readLine();
-            System.out.println(query);
+            int indexOfAnd = query.indexOf("&");
+            StringBuffer name = getName(query, indexOfAnd);
+            System.out.println(name);
             File root = FileSystemView.getFileSystemView().getHomeDirectory();
-            String path = root + "/Flower-Catalog/src/main/java/";
+            String path = root + "/Flower-Catalog/src/main/java/htmlpages/guestBook.html";
             File file = new File(path);
             exchange.sendResponseHeaders(200, file.length());
             try (OutputStream os = exchange.getResponseBody()) {
@@ -53,6 +54,18 @@ public class Server {
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+        }
+
+        private StringBuffer getName(String query, int indexOfAnd) {
+            StringBuffer name = new StringBuffer();
+            for (int i = 5; i < indexOfAnd; i++) {
+                if (query.charAt(i) == '+') {
+                    name.append(" ");
+                } else {
+                    name.append(query.charAt(i));
+                }
+            }
+            return name;
         }
     }
 }
