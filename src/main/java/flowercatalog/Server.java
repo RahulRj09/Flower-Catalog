@@ -19,6 +19,7 @@ public class Server {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/", new MyHandler());
         server.createContext("/comments", new PostHandler());
+        server.createContext("/getComments", new GetHandler());
         server.setExecutor(null);
         server.start();
     }
@@ -26,6 +27,7 @@ public class Server {
     static class MyHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+            System.out.println(exchange.getRequestMethod());
             URI requestURI = exchange.getRequestURI();
             File root = FileSystemView.getFileSystemView().getHomeDirectory();
             String path = root + "/Flower-Catalog/src/main/java/" + requestURI;
@@ -88,6 +90,13 @@ public class Server {
                 }
             }
             return comment;
+        }
+    }
+
+    private static class GetHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+
         }
     }
 }

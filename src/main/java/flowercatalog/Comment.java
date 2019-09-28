@@ -3,9 +3,9 @@ package flowercatalog;
 import java.time.LocalDate;
 
 public class Comment {
-    String name;
-    String comment;
-    LocalDate date;
+    private String name;
+    private String comment;
+    private LocalDate date;
 
     public Comment(StringBuffer name, StringBuffer comment, LocalDate date) {
         this.name = name.toString();
@@ -21,4 +21,5 @@ public class Comment {
                 ", date=" + date +
                 '}';
     }
+
 }
