@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
+    private static List<Comment> comments = new ArrayList<>();
+
     public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/", new MyHandler());
@@ -27,7 +29,6 @@ public class Server {
     static class MyHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            System.out.println(exchange.getRequestMethod());
             URI requestURI = exchange.getRequestURI();
             File root = FileSystemView.getFileSystemView().getHomeDirectory();
             String path = root + "/Flower-Catalog/src/main/java/" + requestURI;
@@ -42,7 +43,7 @@ public class Server {
     }
 
     private static class PostHandler implements HttpHandler {
-        List<Comment> comments = new ArrayList<>();
+
 
         @Override
         public void handle(HttpExchange exchange) throws IOException {
@@ -91,12 +92,25 @@ public class Server {
             }
             return comment;
         }
+
     }
 
     private static class GetHandler implements HttpHandler {
+
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-
+            String res = "";
+            for (Comment comment : comments) {
+                res +=comment.getName();
+                res += "  ";
+                res +=comment.getComment();
+                res += "  ";
+                res +=comment.getDate();
+            }
+            exchange.sendResponseHeaders(200, res.length());
+            OutputStream os = exchange.getResponseBody();
+            os.write(res.getBytes());
+            os.close();
         }
     }
 }
