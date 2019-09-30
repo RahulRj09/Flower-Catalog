@@ -1,5 +1,7 @@
 package flowercatalog;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -55,6 +57,13 @@ public class Server {
             StringBuffer comment = getComment(query, indexOfAnd + 9);
             Comment commentA = new Comment(name, comment, LocalDate.now());
             comments.add(commentA);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+            try {
+                objectMapper.writeValue(new File("/Users/rahul.joshi/Flower-Catalog/src/main/java/json/comments.json"), comments);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             for (Comment comment1 : comments) {
                 System.out.println(comment1);
             }
