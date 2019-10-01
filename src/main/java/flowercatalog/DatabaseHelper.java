@@ -2,7 +2,7 @@ package flowercatalog;
 
 import java.sql.*;
 
-public class DatabaseConnection {
+public class DatabaseHelper {
     private Connection connect() {
         Connection conn = null;
         try {

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class Server {
     private static List<Comment> comments = new ArrayList<>();
-    private static DatabaseConnection databaseConnection = new DatabaseConnection();
+    private static DatabaseHelper databaseHelper = new DatabaseHelper();
 
     public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
@@ -57,7 +57,7 @@ public class Server {
             StringBuffer comment = getComment(query, indexOfAnd + 9);
             Comment commentA = new Comment(name, comment, LocalDate.now());
             comments.add(commentA);
-            databaseConnection.insert(commentA);
+            databaseHelper.insert(commentA);
             File root = FileSystemView.getFileSystemView().getHomeDirectory();
             String path = root + "/Flower-Catalog/src/main/java/htmlpages/guestBook.html";
             File file = new File(path);
@@ -100,7 +100,7 @@ public class Server {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
 
-            ResultSet resultSet = databaseConnection.getAllData();
+            ResultSet resultSet = databaseHelper.getAllData();
             String res = "";
             for (Comment comment : comments) {
                 res += comment.getName();
