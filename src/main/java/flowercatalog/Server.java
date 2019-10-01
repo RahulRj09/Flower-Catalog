@@ -57,6 +57,8 @@ public class Server {
             StringBuffer comment = getComment(query, indexOfAnd + 9);
             Comment commentA = new Comment(name, comment, LocalDate.now());
             comments.add(commentA);
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            databaseConnection.insert(commentA);
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
             try {
