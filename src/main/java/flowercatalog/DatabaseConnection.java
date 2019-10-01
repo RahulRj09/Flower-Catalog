@@ -27,6 +27,19 @@ public class DatabaseConnection {
             System.out.println(e.getMessage());
         }
     }
+
+    public ResultSet getAllData() {
+        String sql = "select * from comment";
+        ResultSet resultSet = null;
+        try (Connection connection = this.connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
 }
 
 

@@ -1,7 +1,5 @@
 package flowercatalog;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -12,12 +10,14 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
     private static List<Comment> comments = new ArrayList<>();
+    private static DatabaseConnection databaseConnection = new DatabaseConnection();
 
     public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
@@ -57,18 +57,7 @@ public class Server {
             StringBuffer comment = getComment(query, indexOfAnd + 9);
             Comment commentA = new Comment(name, comment, LocalDate.now());
             comments.add(commentA);
-            DatabaseConnection databaseConnection = new DatabaseConnection();
             databaseConnection.insert(commentA);
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-            try {
-                objectMapper.writeValue(new File("/Users/rahul.joshi/Flower-Catalog/src/main/java/json/comments.json"), comments);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            for (Comment comment1 : comments) {
-                System.out.println(comment1);
-            }
             File root = FileSystemView.getFileSystemView().getHomeDirectory();
             String path = root + "/Flower-Catalog/src/main/java/htmlpages/guestBook.html";
             File file = new File(path);
@@ -110,13 +99,15 @@ public class Server {
 
         @Override
         public void handle(HttpExchange exchange) throws IOException {
+
+            ResultSet resultSet = databaseConnection.getAllData();
             String res = "";
             for (Comment comment : comments) {
-                res +=comment.getName();
+                res += comment.getName();
                 res += "  ";
-                res +=comment.getComment();
+                res += comment.getComment();
                 res += "  ";
-                res +=comment.getDate();
+                res += comment.getDate();
             }
             exchange.sendResponseHeaders(200, res.length());
             OutputStream os = exchange.getResponseBody();
@@ -126,3 +117,12 @@ public class Server {
     }
 }
 
+
+//    ObjectMapper objectMapper = new ObjectMapper();
+//            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+//                    try {
+//                    objectMapper.writeValue(new File("/Users/rahul.joshi/Flower-Catalog/src/main/java/json/comments.json"), comments);
+//                    } catch (IOException e) {
+//                    e.printStackTrace();
+//                    }
+//
