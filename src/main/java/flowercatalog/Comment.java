@@ -22,15 +22,15 @@ public class Comment {
                 '}';
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public String getComment() {
+    String getComment() {
         return comment;
     }
 
-    public LocalDate getDate() {
+    LocalDate getDate() {
         return date;
     }
 }

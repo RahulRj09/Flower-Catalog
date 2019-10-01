@@ -36,16 +36,5 @@ public class Server {
             }
         }
     }
+}
 
-
-    }
-
-
-//    ObjectMapper objectMapper = new ObjectMapper();
-//            objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-//                    try {
-//                    objectMapper.writeValue(new File("/Users/rahul.joshi/Flower-Catalog/src/main/java/json/comments.json"), comments);
-//                    } catch (IOException e) {
-//                    e.printStackTrace();
-//                    }
-//

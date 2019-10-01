@@ -21,4 +21,5 @@ dependencies {
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.9.3'
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.15'
     runtime "mysql:mysql-connector-java:8.0.15"
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
 }

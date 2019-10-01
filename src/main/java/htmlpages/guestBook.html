@@ -6,7 +6,11 @@
     $(document).ready(function(){
         $("button").click(function(){
             $.get("/getComments", function(data, status){
-                $('#post-result').append(data);
+            let comments = data.comments;
+            for (var i=0; i < comments.length;i++){
+               $('table').append('<tr>'+'<td> '+ comments[i].name +' </td>'+'<td>' +
+               comments[i].comment +'</td>'+'<td>' +comments[i].date+'</td>'+'</tr>');
+               }
             });
         });
      });
@@ -22,6 +26,6 @@
 </form>
 <button>Get Comments</button>
 <br/>
-<div id='post-result'></div>
+<table></table>
 </body>
 </html>

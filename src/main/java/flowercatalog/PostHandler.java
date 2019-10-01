@@ -61,7 +61,7 @@ class PostHandler implements HttpHandler {
         return comment;
     }
 
-    public  List<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 }

@@ -1,5 +1,8 @@
 package flowercatalog;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.sql.*;
 
 public class DatabaseHelper {
@@ -28,27 +31,27 @@ public class DatabaseHelper {
         }
     }
 
-    public String getAllData() {
+    public JSONObject getAllData() {
+        JSONObject comments = new JSONObject();
+
+        JSONArray commentArray = new JSONArray();
         String sql = "select * from comment";
-        String res = "";
         try (Connection connection = this.connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                res += resultSet.getString("name");
-                res += "  ";
-                res += resultSet.getString("comment");
-                res += "  ";
-                res += resultSet.getDate("date");
-                res += "\n";
+                JSONObject comment = new JSONObject();
+                comment.put("name", resultSet.getString("name"));
+                comment.put("comment", resultSet.getString("comment"));
+                comment.put("date", resultSet.getDate("date").toString());
+                commentArray.add(comment);
             }
-            System.out.println(res);
+            comments.put("comments", commentArray);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return res;
+        return comments;
     }
-
 }
 
 
