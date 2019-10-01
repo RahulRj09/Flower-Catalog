@@ -9,8 +9,6 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.file.Files;
-import java.sql.ResultSet;
-import java.util.List;
 
 public class Server {
 

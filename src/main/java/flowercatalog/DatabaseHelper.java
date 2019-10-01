@@ -7,7 +7,7 @@ public class DatabaseHelper {
         Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myDb", "root", "password");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/myDb?useSSL=false", "root", "password");
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -28,16 +28,25 @@ public class DatabaseHelper {
         }
     }
 
-    public ResultSet getAllData() {
+    public String getAllData() {
         String sql = "select * from comment";
-        ResultSet resultSet = null;
+        String res = "";
         try (Connection connection = this.connect();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                res += resultSet.getString("name");
+                res += "  ";
+                res += resultSet.getString("comment");
+                res += "  ";
+                res += resultSet.getDate("date");
+                res += "\n";
+            }
+            System.out.println(res);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return resultSet;
+        return res;
     }
 
 }
